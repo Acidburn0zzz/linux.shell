@@ -1,0 +1,58 @@
+#!/bin/bash
+ 
+#JAVA Development config
+
+:<<!BLOCK!
+Author:coder4869
+Email:coder4869@gmail.com
+Github:https://github.com/coder4869/Java/
+Dowload tools from pan:
+Link:https://pan.baidu.com/s/1hrNatHa 
+Password:iv9x
+!BLOCK!
+
+function isFileExist() {
+	if [ ! -e $1 ]; then
+		echo "File $1 not exist!"
+		echo "Dowload tools from pan: https://pan.baidu.com/s/1hrNatHa (Password:iv9x)"
+		exit 1
+	else 
+		return	
+	fi
+}
+
+function installJDK() {
+	cd $(dirname $1)
+	tar -zxvf $(basename $1) 
+	ls
+}
+
+
+function configEnv() {
+
+	if [ -z $JAVA_HOME ]; then
+JAVA_HOME_DIR=$1
+(
+cat <<!EOF!
+export JAVA_HOME=$JAVA_HOME_DIR
+export PATH=$JAVA_HOME_DIR/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME_DIR/lib/dt.jar:$JAVA_HOME_DIR/lib/tools.jar
+!EOF!
+) >> ~/.bashrc
+	fi
+	source ~/.bashrc
+	java -version
+}
+
+
+echo "##### Install and Config JDK #####"
+
+JDK_File="/opt/java/jdk-*.tar.gz"
+JDK_Dir="/opt/java/jdk1.*"
+
+isFileExist ${JDK_File}
+#installJDK ${JDK_File}
+configEnv ${JDK_Dir}
+
+
+
