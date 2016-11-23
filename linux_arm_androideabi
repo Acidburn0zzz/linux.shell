@@ -1,0 +1,57 @@
+#!/bin/bash
+
+:<<!BLOCK!
+Author:coder4869
+Email:coder4869@gmail.com
+Github:https://github.com/coder4869/linux.shell
+Description:This document is used for build the environment for arm androideabi on liunx
+	Dowload tools from pan:
+	Link:https://pan.baidu.com/s/1mhKkwjQ 
+	Password:g2jb
+!BLOCK!
+
+function isFileExist() {
+	if [ ! -e $1 ]; then
+		echo "File $1 not exist!"
+		echo "Download tools from pan: https://pan.baidu.com/s/1mhKkwjQ (Password:g2jb)"
+		exit 1
+	else 
+		return	
+	fi
+}
+
+function installARM_ANDROID_EABI() {
+	cd $(dirname $1)
+	tar -jxvf $(basename $1) 
+	sudo mkdir $(dirname $2) 	# $2 is gcc path of installing
+	sudo mv arm-linux-androideabi-4.4.3 $2
+}
+
+function configARM_ANDROID_EABIEnv() {
+
+	if [ -z $ARM_ANDROID_EABI_HOME ]; then
+ARM_ANDROID_EABI_HOME_DIR=$1
+(
+cat <<EOF
+export ARM_ANDROID_EABI_HOME=$ARM_ANDROID_EABI_HOME_DIR
+export PATH=$ARM_ANDROID_EABI_HOME_DIR/bin:$PATH
+EOF
+) >> $2
+	fi
+	source $2
+}
+
+echo "##### Install and Config ARM_ANDROID_EABI #####"
+
+ARM_ANDROID_EABI_File="/home/$USER/Downloads/arm-linux-androideabi-*.tar.bz2"
+ARM_ANDROID_EABI_Dir="/opt/arm-linux/arm-linux-androideabi"
+BASHRC_File="/home/$USER/.bashrc"
+
+isFileExist ${ARM_ANDROID_EABI_File}
+installARM_ANDROID_EABI ${ARM_ANDROID_EABI_File} ${ARM_ANDROID_EABI_Dir}
+configARM_ANDROID_EABIEnv ${ARM_ANDROID_EABI_Dir} ${BASHRC_File}
+
+echo ${BASHRC_File}
+#echo "Restart system to make config effect"
+#sudo reboot now
+
