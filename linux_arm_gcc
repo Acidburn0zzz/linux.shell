@@ -10,6 +10,23 @@ Description:This document is used for build the environment for arm gcc on liunx
 	Password:g2jb
 !BLOCK!
 
+
+:<<!BLOCK!
+#prepare
+#get root privilege
+su
+#install make
+yum -y install gcc automake autoconf libtool make
+#install g++
+yum install gcc gcc-c++
+#install patch for error: patch command not found
+yum install patch 
+#for 32bit
+yum install glibc-devel.i686
+yum install zlib.i686
+yum install libstdc++.so.6
+!BLOCK!
+
 function isFileExist() {
 	if [ ! -e $1 ]; then
 		echo "File $1 not exist!"
@@ -55,19 +72,5 @@ echo ${BASHRC_File}
 #echo "Restart system to make config effect"
 #sudo reboot now
 
-:<<!BLOCK!
-#get root privilege
-su
-
-#install make
-yum -y install gcc automake autoconf libtool make
-#install g++
-yum install gcc gcc-c++
-#install patch for error: patch command not found
-yum install patch 
-#for 32bit
-yum install glibc-devel.i686
-yum install libstdc++.so.6
-!BLOCK!
 
 
