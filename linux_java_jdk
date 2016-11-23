@@ -13,7 +13,7 @@ Description:This document is used for build the jdk environment on liunx
 function isFileExist() {
 	if [ ! -e $1 ]; then
 		echo "File $1 not exist!"
-		echo "Dowload tools from pan: https://pan.baidu.com/s/1hrNatHa (Password:iv9x)"
+		echo "Download tools from pan: https://pan.baidu.com/s/1hrNatHa (Password:iv9x)"
 		exit 1
 	else 
 		return	
@@ -51,9 +51,10 @@ JDK_Dir="/opt/java/jdk1.*"
 BASHRC_File="/home/$USER/.bashrc"
 
 isFileExist ${JDK_File}
-#installJDK ${JDK_File}
+installJDK ${JDK_File}
 configEnv ${JDK_Dir} ${BASHRC_File}
 
 echo ${BASHRC_File}
-#echo "Restart system to make config effect"
-#sudo reboot now
+echo "Restart system to make config effect"
+sudo reboot now
+
