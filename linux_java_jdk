@@ -1,14 +1,13 @@
 #!/bin/bash
- 
-#JAVA Development config
 
 :<<!BLOCK!
 Author:coder4869
 Email:coder4869@gmail.com
-Github:https://github.com/coder4869/Java/
-Dowload tools from pan:
-Link:https://pan.baidu.com/s/1hrNatHa 
-Password:iv9x
+Github:https://github.com/coder4869/linux.shell
+Description:This document is used for build the jdk environment on liunx
+	Dowload tools from pan:
+	Link:https://pan.baidu.com/s/1hrNatHa 
+	Password:iv9x
 !BLOCK!
 
 function isFileExist() {
