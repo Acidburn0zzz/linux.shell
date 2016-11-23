@@ -23,8 +23,8 @@ function isFileExist() {
 function installARM_GCC() {
 	cd $(dirname $1)
 	tar -zxvf $(basename $1) 
-	mkdir /opt/arm-linux-gcc
-	cp -rf opt/FriendlyARM/toolschain /opt/arm-linux-gcc
+	sudo mkdir $(dirname $2) 	# $2 is gcc path of installing
+	sudo mv opt/FriendlyARM/toolschain/* $2
 }
 
 function configARM_GCCEnv() {
@@ -44,16 +44,16 @@ EOF
 echo "##### Install and Config ARM_GCC #####"
 
 ARM_GCC_File="/home/$USER/Downloads/arm-linux-gcc-*.tar.gz"
-ARM_GCC_Dir="/opt/arm-linux-gcc/toolschain/*"
+ARM_GCC_Dir="/opt/arm-linux/arm-linux-gcc"
 BASHRC_File="/home/$USER/.bashrc"
 
 isFileExist ${ARM_GCC_File}
-installARM_GCC ${ARM_GCC_File}
+installARM_GCC ${ARM_GCC_File} ${ARM_GCC_Dir}
 configARM_GCCEnv ${ARM_GCC_Dir} ${BASHRC_File}
 
 echo ${BASHRC_File}
-echo "Restart system to make config effect"
-sudo reboot now
+#echo "Restart system to make config effect"
+#sudo reboot now
 
 :<<!BLOCK!
 #get root privilege
