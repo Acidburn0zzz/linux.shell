@@ -1,0 +1,73 @@
+#!/bin/bash
+
+:<<!BLOCK!
+Author:coder4869
+Email:coder4869@gmail.com
+Github:https://github.com/coder4869/linux.shell
+Description:This document is used for build the environment for arm gcc on liunx
+	Dowload tools from pan:
+	Link:https://pan.baidu.com/s/1mhKkwjQ 
+	Password:g2jb
+!BLOCK!
+
+function isFileExist() {
+	if [ ! -e $1 ]; then
+		echo "File $1 not exist!"
+		echo "Download tools from pan: https://pan.baidu.com/s/1mhKkwjQ (Password:g2jb)"
+		exit 1
+	else 
+		return	
+	fi
+}
+
+function installARM_GCC() {
+	cd $(dirname $1)
+	tar -zxvf $(basename $1) 
+	mkdir /opt/arm-linux-gcc
+	cp -rf opt/FriendlyARM/toolschain /opt/arm-linux-gcc
+}
+
+function configARM_GCCEnv() {
+
+	if [ -z $ARM_GCC_HOME ]; then
+ARM_GCC_HOME_DIR=$1
+(
+cat <<EOF
+export ARM_GCC_HOME=$ARM_GCC_HOME_DIR
+export PATH=$ARM_GCC_HOME_DIR/bin:$PATH
+EOF
+) >> $2
+	fi
+	source $2
+}
+
+echo "##### Install and Config ARM_GCC #####"
+
+ARM_GCC_File="/home/$USER/Downloads/arm-linux-gcc-*.tar.gz"
+ARM_GCC_Dir="/opt/arm-linux-gcc/toolschain/*"
+BASHRC_File="/home/$USER/.bashrc"
+
+isFileExist ${ARM_GCC_File}
+installARM_GCC ${ARM_GCC_File}
+configARM_GCCEnv ${ARM_GCC_Dir} ${BASHRC_File}
+
+echo ${BASHRC_File}
+echo "Restart system to make config effect"
+sudo reboot now
+
+:<<!BLOCK!
+#get root privilege
+su
+
+#install make
+yum -y install gcc automake autoconf libtool make
+#install g++
+yum install gcc gcc-c++
+#install patch for error: patch command not found
+yum install patch 
+#for 32bit
+yum install glibc-devel.i686
+yum install libstdc++.so.6
+!BLOCK!
+
+
