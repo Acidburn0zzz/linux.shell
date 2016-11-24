@@ -1,5 +1,5 @@
 # Linux.shell
-Provides basic shell for linux.
+Provides basic shell for linux(tested on centos 7.2).
 
 1. linux_java_jdk: provides JDK install and config script for linux
 
